@@ -1,5 +1,10 @@
 #include "Mesh.h"
 
+std::ostream& operator<<(std::ostream& os, const Point& p) {
+    os << "(" << p.x << "," << p.y << ")";
+    return os;
+};
+
 Mesh::Mesh(double xl, double xr, double yl, double yr, int nx, int ny) {
     double dx = (xr - xl)/double(nx);
     double dy = (yr - yl)/double(ny);

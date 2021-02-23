@@ -3,8 +3,11 @@ all: mesh
 CPP = g++
 CPPFLAGS = -std=c++11
 
-mesh: 
-	$(CPP) $(CPPFLAGS) -o mesh main.cpp Mesh.cpp
+%.o: %.cpp
+	$(CPP) $(CPPFLAGS) -c -o $@ $<
+
+mesh: main.o Mesh.o
+	$(CPP) $(CPPFLAGS) -o mesh main.o Mesh.o
 
 clean:	
-	rm -f mesh
+	rm -f *.o mesh

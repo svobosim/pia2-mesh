@@ -1,4 +1,5 @@
 #include "Mesh.h"
+#include "Field.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -20,6 +21,13 @@ int main(int iargc, char* iargv[]) {
             std::cout << "," << p.node_id[j];
         }
         std::cout << "]\n";
+    }
+    
+    Field<double> W(m);
+    
+    for (int i=0; i<m.cell.size(); ++i) {
+        W[i] = i;
+        std::cout << W[i] << "\n";
     }
 
     return 0;

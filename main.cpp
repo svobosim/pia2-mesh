@@ -23,22 +23,22 @@ int main(int iargc, char* iargv[]) {
         std::cout << "]\n";
     }
 	
-	Field<double> W(m);
+	  Field<double> W(m);
 	
-	for (int i=0; i<m.cell.size(); ++i) {
-		W[i] = i;
-        std::cout << W[i] << "...\n";
+	  for (int i=0; i<m.cell.size(); ++i) {
+		    W[i] = i;
+        std::cout << W[i] << "\n";
     }
 	
-	std::vector<int> pointCellNeighbors;
-	for (int i=0; i<m.node.size(); ++i) {
-		pointCellNeighbors = m.pointCellNeighbors(i);
-		std::cout << "Node no. " << i << " has neighbor cells " << pointCellNeighbors[0];
-		for (int j=1; j<pointCellNeighbors.size(); j++){
-			std::cout << ", " << pointCellNeighbors[j];
-		}
-		std::cout << "\n";
-	}
+	 std::vector<int> pointCellNeighbors;
+	 for (int i=0; i<m.node.size(); ++i) {
+		   pointCellNeighbors = m.pointCellNeighbors(i);
+		   std::cout << "Node no. " << i << " has neighbor cells " << pointCellNeighbors[0];
+		   for (int j=1; j<pointCellNeighbors.size(); j++){
+			     std::cout << ", " << pointCellNeighbors[j];
+		   }
+		   std::cout << "\n";
+	  }
 
     return 0;
 }

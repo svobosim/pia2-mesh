@@ -1,4 +1,6 @@
 #include "Mesh.h"
+#include <iostream>
+#include <vector>
 
 std::ostream& operator<<(std::ostream& os, const Point& p) {
     os << "(" << p.x << "," << p.y << ")";
@@ -25,4 +27,22 @@ Mesh::Mesh(double xl, double xr, double yl, double yr, int nx, int ny) {
                                     (i+1)*(ny+1) + j + 1},*this));
         }
     }
-}; 
+};
+
+std::vector<int> Mesh::pointCellNeighbors(int p){
+	std::vector<int> pointCellNeighbors;
+	
+	if (p < 0 || p >= node.size()){
+		std::cout << "Warning: selected point does not exist.";
+	}
+	
+	for(int i=0; i<cell.size();i++){
+		Polygon const& polygonTmp = cell[i];
+		for(int j=0; j<polygonTmp.node_id.size(); j++){
+			if (polygonTmp.node_id[j]==p){
+				pointCellNeighbors.push_back(i);
+			}
+		}
+	}
+	return pointCellNeighbors;
+};

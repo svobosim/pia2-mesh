@@ -3,7 +3,7 @@
 #include <vector>
 
 std::ostream& operator<<(std::ostream& os, const Point& p) {
-    os << "(" << p.x << "," << p.y << ")";
+    os << p.x << " " << p.y << " 0.0";
     return os;
 };
 

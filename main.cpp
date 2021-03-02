@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "Field.h"
+#include "output.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -39,6 +40,8 @@ int main(int iargc, char* iargv[]) {
 		   }
 		   std::cout << "\n";
 	  }
+	  
+	outputVTK("output.vtk",m,W);
 
     return 0;
 }

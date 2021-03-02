@@ -19,6 +19,7 @@ public:
     Polygon(std::vector<int> const& _node_id, Mesh & _m) : node_id(_node_id), mesh(_m) {};
     std::vector<int> node_id;
     Mesh& mesh;
+    double area();  // trida polygon obsahuje metodu area
 };
 
 class Mesh {

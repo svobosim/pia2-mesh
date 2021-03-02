@@ -43,5 +43,11 @@ int main(int iargc, char* iargv[]) {
 	  
 	outputVTK("output.vtk",m,W);
 
+	double plocha;
+	for (int i=0; i<m.cell.size(); ++i) {
+		Polygon p = m.cell[i];
+		std::cout <<"Area of cell no. " << i << " is " << p.area() << "\n";
+	}
+	
     return 0;
 }

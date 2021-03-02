@@ -20,6 +20,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Polygon& p);
     std::vector<int> node_id;
     Mesh& mesh;
+    double area();  // trida polygon obsahuje metodu area
 };
 
 class Mesh {

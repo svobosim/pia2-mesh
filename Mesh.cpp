@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include <iostream>
 #include <vector>
-
+#include <cmath>
 std::ostream& operator<<(std::ostream& os, const Point& p) {
     os << p.x << " " << p.y << " 0.0";
     return os;
@@ -55,3 +55,14 @@ std::vector<int> Mesh::pointCellNeighbors(int p){
 	}
 	return pointCellNeighbors;
 };
+
+double Polygon::area(){
+	double plocha, lsum, rsum;
+	for (int j=0; j<(node_id.size()-1.0); ++j) {                                   // potreuju cyklus od 0 do poctu nodu meho polygonu-1
+		lsum = lsum + mesh.node[node_id[j]].x * mesh.node[node_id[j+1]].y;
+		rsum = rsum + mesh.node[node_id[j+1]].x * mesh.node[node_id[j]].y;
+	}
+	plocha = std::abs (lsum + mesh.node[node_id[node_id.size()-1.0]].x * mesh.node[node_id[0]].y) - rsum - (mesh.node[node_id[0]].x * mesh.node[node_id[node_id.size()-1.0]].y);
+	plocha = plocha*0.5;
+	return plocha;
+}

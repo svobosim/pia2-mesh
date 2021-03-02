@@ -10,7 +10,7 @@ class Mesh; // Forward declaration required for class Polygon to know
 class Point {
 public:
     Point(double _x, double _y) : x(_x), y(_y) {};
-    friend std::ostream& operator<<(std::ostream& os, const Point& p);  //friend dava fci pristup dovnitr metody
+    friend std::ostream& operator<<(std::ostream& os, const Point& p);
     double x, y;
 };
 
@@ -25,9 +25,9 @@ public:
 class Mesh {
 public:
     Mesh(double xl, double xr, double yl, double yr, int nx, int ny);
-    
     std::vector<Polygon> cell;
     std::vector<Point> node;
+	std::vector<int> pointCellNeighbors(int p);
 };
 
 #endif //MESH_H

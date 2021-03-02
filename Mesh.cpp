@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include <iostream>
 #include <vector>
-
+#<cmath>
 std::ostream& operator<<(std::ostream& os, const Point& p) {
     os << "(" << p.x << "," << p.y << ")";
     return os;

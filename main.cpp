@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "Field.h"
+#include "Mesh.cpp"
 #include "output.h"
 #include <iostream>
 #include <cstdlib>
@@ -49,5 +50,13 @@ int main(int iargc, char* iargv[]) {
 		std::cout <<"Area of cell no. " << i << " is " << p.area() << "\n";
 	}
 	
+	int edgeNum=3;
+	for (int i=0; i<m.cell.size(); ++i) {
+		Polygon p = m.cell[i];
+		std::cout << i << " " <<edgeNum << " " << p.edgeLength(edgeNum) << "\n";
+	}
+	
+	
     return 0;
 }
+

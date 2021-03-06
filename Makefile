@@ -1,7 +1,7 @@
 all: mesh
 
 CPP = g++
-CPPFLAGS = -std=c++11 #-DDEBUG
+CPPFLAGS = -std=c++20 #-DDEBUG
 
 %.o: %.cpp
 	$(CPP) $(CPPFLAGS) -c -o $@ $<
@@ -9,5 +9,5 @@ CPPFLAGS = -std=c++11 #-DDEBUG
 mesh: main.o Mesh.o output.o
 	$(CPP) $(CPPFLAGS) -o mesh main.o Mesh.o output.o
 
-clean:	
+clean:
 	rm -f *.o mesh

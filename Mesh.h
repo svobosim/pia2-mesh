@@ -30,7 +30,6 @@ public:
     std::vector<Polygon> cell;
     std::vector<Point> node;
 				std::vector<int> pointCellNeighbors(int p);
-    //std::set<int> returnBoundaryNodes(std::vector<Polygon> cell, std::vector<Point> node);
     std::set<int> returnBoundaryNodes();
 };
 

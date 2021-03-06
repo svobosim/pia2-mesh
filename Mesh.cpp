@@ -98,20 +98,12 @@ std::set<int> Mesh::returnBoundaryNodes(){
 		int numVertices = plg.node_id.size();
 		for(int i = 0; i < numVertices-1; i++){
 			//ulozeni jednotlivych hran bunky
-			edges.push_back(Edge(plg.node_id[i],
-																								plg.node_id[i+1],
-																								hashFnc(node[plg.node_id[i]].x,
-																																node[plg.node_id[i]].y,
-																																node[plg.node_id[i+1]].x,
-																																node[plg.node_id[i+1]].y )));
+			edges.push_back(Edge(plg.node_id[i],	plg.node_id[i+1],
+						hashFnc(node[plg.node_id[i]].x, node[plg.node_id[i]].y, node[plg.node_id[i+1]].x, node[plg.node_id[i+1]].y )));
 		}
 		//hrana ktera uzavira bunku
-		edges.push_back(Edge(plg.node_id[numVertices-1],
-																								plg.node_id[0],
-																								hashFnc(node[plg.node_id[numVertices-1]].x,
-																																node[plg.node_id[numVertices-1]].y,
-																																node[plg.node_id[0]].x,
-																																node[plg.node_id[0]].y )));
+		edges.push_back(Edge(plg.node_id[numVertices-1], plg.node_id[0],
+					hashFnc(node[plg.node_id[numVertices-1]].x, node[plg.node_id[numVertices-1]].y, node[plg.node_id[0]].x, node[plg.node_id[0]].y )));
 	}
 	//seradi hrany podle hodnoty hashe
 	auto SortEdgesHash = [](std::vector<Edge> _edges){

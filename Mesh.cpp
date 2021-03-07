@@ -70,14 +70,13 @@ double Polygon::area(){
 //delka hrany bunky
 double Polygon::edgeLength(int i){	
 double edgeLength;
-if(i==node_id.size()){	
-	edgeLength = sqrt(pow((mesh.node[node_id[0]].x-mesh.node[node_id[i-1]].x),2)+pow((mesh.node[node_id[0]].y-mesh.node[node_id[i-1]].y),2));
+if(i==(node_id.size()-1)){	
+	edgeLength = sqrt(pow((mesh.node[node_id[0]].x-mesh.node[node_id[i]].x),2)+pow((mesh.node[node_id[0]].y-mesh.node[node_id[i]].y),2));
 }
 else
 {
-	edgeLength = sqrt(pow((mesh.node[node_id[i]].x-mesh.node[node_id[i-1]].x),2)+pow((mesh.node[node_id[i]].y-mesh.node[node_id[i-1]].y),2));
+	edgeLength = sqrt(pow((mesh.node[node_id[i+1]].x-mesh.node[node_id[i]].x),2)+pow((mesh.node[node_id[i+1]].y-mesh.node[node_id[i]].y),2));
 }
 return edgeLength;
 }
-
 

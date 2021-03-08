@@ -21,6 +21,7 @@ public:
     std::vector<int> node_id;
     Mesh& mesh;
     double area();  // trida polygon obsahuje metodu area
+    double edgeLength(int i); 
 };
 
 class Mesh {
@@ -32,3 +33,4 @@ public:
 };
 
 #endif //MESH_H
+

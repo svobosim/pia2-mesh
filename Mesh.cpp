@@ -66,3 +66,27 @@ double Polygon::area(){
 	plocha = plocha*0.5;
 	return plocha;
 }
+
+//test konvexnosti bunky (1 = je konvexni; 0 = neni konvexni)
+bool Polygon::isConvex(){
+	bool isConvex;
+	double u1, u2, v1, v2, w3;
+
+			for(int j=0; j<(node_id.size()-2); ++j){
+			u1 = mesh.node[node_id[j+1]].x - mesh.node[node_id[j]].x;
+			u2 = mesh.node[node_id[j+1]].y - mesh.node[node_id[j]].y;
+			
+			v1 = mesh.node[node_id[j+2]].x - mesh.node[node_id[j]].x;
+			v2 = mesh.node[node_id[j+2]].y - mesh.node[node_id[j]].y;
+			
+			w3 = u1 * v2 - v1 * u2;
+	    	}
+	    
+		if(w3 > 0){
+	    	isConvex = 1;
+		}else{	
+		isConvex = 0;
+		}
+
+return isConvex;
+};

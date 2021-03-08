@@ -21,6 +21,7 @@ public:
     std::vector<int> node_id;
     Mesh& mesh;
     double area();  // trida polygon obsahuje metodu area
+    bool isConvex();
 };
 
 class Mesh {

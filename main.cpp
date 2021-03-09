@@ -1,6 +1,5 @@
 #include "Mesh.h"
 #include "Field.h"
-#include "Mesh.cpp"
 #include "output.h"
 #include <iostream>
 #include <cstdlib>

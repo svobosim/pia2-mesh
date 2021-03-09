@@ -22,6 +22,19 @@ public:
     std::vector<int> node_id;
     Mesh& mesh;
     double area();  // trida polygon obsahuje metodu area
+    double edgeLength(int i); 
+};
+
+struct Edge{ //stejne jako class ale automaticky vse public
+	Edge(int _n1, int _n2, double _hash) : n1(_n1), n2(_n2), hash(_hash) {};
+	double hash;
+	int n1, n2;
+	//pretizeni operatoru < pro sort objektu
+	bool operator< (const Edge &other) const { return hash < other.hash; };
+	// Vector2D normal();
+	// double length();
+	// int left();
+	// int right();
 };
 
 class Mesh {
@@ -34,3 +47,4 @@ public:
 };
 
 #endif //MESH_H
+

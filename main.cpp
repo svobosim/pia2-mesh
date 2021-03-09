@@ -54,6 +54,13 @@ int main(int iargc, char* iargv[]) {
 	for(auto &t : boundaryNodes){
 		std::cout << t << " pos: " << m.node[t] << std::endl;
 	}
-
+	
+	int edgeNum=3;
+	for (int i=0; i<m.cell.size(); ++i) {
+		Polygon p = m.cell[i];
+		std::cout << i << " " <<edgeNum << " " << p.edgeLength(edgeNum) << "\n";
+	}
+	
     return 0;
 }
+

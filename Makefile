@@ -9,5 +9,5 @@ CPPFLAGS = -std=c++11 #-DDEBUG
 mesh: main.o Mesh.o output.o Vector2D.o Compressible.o
 	$(CPP) $(CPPFLAGS) -o mesh main.o Mesh.o output.o Vector2D.o Compressible.o
 
-clean:	
+clean:
 	rm -f *.o mesh

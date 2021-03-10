@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <set>
+#include <cmath>
 
 class Mesh; // Forward declaration required for class Polygon to know
             // about class Mesh.
@@ -29,8 +30,9 @@ struct Edge{ //stejne jako class ale automaticky vse public
 	Edge(int _n1, int _n2, double _hash) : n1(_n1), n2(_n2), hash(_hash) {};
 	double hash;
 	int n1, n2;
-	//pretizeni operatoru < pro sort objektu
+	//pretizeni operatoru < pro sort objektu, == pro std::unique
 	bool operator< (const Edge &other) const { return hash < other.hash; };
+  bool operator== (const Edge &other) const { return std::fabs(hash - other.hash) < 1.0e-8; };
 	// Vector2D normal();
 	// double length();
 	// int left();
@@ -42,8 +44,10 @@ public:
     Mesh(double xl, double xr, double yl, double yr, int nx, int ny);
     std::vector<Polygon> cell;
     std::vector<Point> node;
+    std::vector<Edge> edge;
     std::vector<int> pointCellNeighbors(int p);
-    std::set<int> returnBoundaryNodes();
+    void generateEdges();
+    std::set<int> boundaryNodes;
 };
 
 #endif //MESH_H

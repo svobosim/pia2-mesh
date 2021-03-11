@@ -108,7 +108,7 @@ bool Polygon::isConvex(){
 		if((w13 <= 0) && (w23 <= 0) && (w33 <= 0)){
 	    	isConvex = 0;
 		}else{	
-			isConvex = 1;
+		isConvex = 1;
 		};
 
 return isConvex;

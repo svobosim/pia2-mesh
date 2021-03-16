@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <algorithm>
+
+
 std::ostream& operator<<(std::ostream& os, const Point& p) {
     os << p.x << " " << p.y << " 0.0";
     return os;
@@ -19,14 +22,14 @@ std::ostream& operator<<(std::ostream& os, const Polygon& p) {
 Mesh::Mesh(double xl, double xr, double yl, double yr, int nx, int ny) {
     double dx = (xr - xl)/double(nx);
     double dy = (yr - yl)/double(ny);
-    
+
     // Create nodes
     for (int i=0; i<nx+1; ++i) {
         for (int j=0; j<ny+1; ++j) {
             node.push_back({xl + i*dx, yl + j*dy});
         }
     }
-    
+
     // Create cells
     for (int i=0; i<nx; ++i) {
         for (int j=0; j<ny; ++j) {
@@ -36,15 +39,35 @@ Mesh::Mesh(double xl, double xr, double yl, double yr, int nx, int ny) {
                                     (i+1)*(ny+1) + j + 1},*this));
         }
     }
+
+    generateEdges();
 };
+
+//random posuv uzlu o r
+void Mesh::randomize(double r){
+	double vysledek, puvodniX, puvodniY, noveX, noveY, randomR, randomPhi;
+	for (int j=0; j<(node.size()); ++j){
+		puvodniX = node[j].x;
+		puvodniY = node[j].y;
+		randomR = (double)rand()/RAND_MAX*r;
+		randomPhi = (double)rand()/RAND_MAX*2*3.14159265359;
+		noveX = puvodniX + randomR*cos(randomPhi);
+		noveY = puvodniY + randomR*sin(randomPhi);
+		node[j].x = noveX;
+		node[j].y = noveY;
+		std::cout << "Coordinates of node " << j << "were changed  "<< "X:" << puvodniX <<"->" << noveX <<"   Y:" << puvodniY <<"->" << noveY << "   (displacement = "<< pow(pow(puvodniX-noveX,2)+ pow(puvodniY-noveY,2),0.5)<< ")\n";
+		//std::cout <<"old x = " puvodniX <<"\n";//", new x = " << noveX << "\n" <<"; old y = " puvodniY <<", new y = " << noveY << " => displacement = "<< pow(pow(puvodniX-noveX,2)+ pow(puvodniY-noveY,2),0.5)<< 
+	}
+	return;
+}
 
 std::vector<int> Mesh::pointCellNeighbors(int p){
 	std::vector<int> pointCellNeighbors;
-	
+
 	if (p < 0 || p >= node.size()){
 		std::cout << "Warning: selected point does not exist.";
 	}
-	
+
 	for(int i=0; i<cell.size();i++){
 		Polygon const& polygonTmp = cell[i];
 		for(int j=0; j<polygonTmp.node_id.size(); j++){
@@ -66,6 +89,7 @@ double Polygon::area(){
 	plocha = plocha*0.5;
 	return plocha;
 }
+
 
 //test konvexnosti bunky (1 = je konvexni; 0 = neni konvexni)
 bool Polygon::isConvex(){
@@ -117,4 +141,63 @@ bool Polygon::isConvex(){
 		};
 
 return isConvex;
+}
+
+//Vygeneruje unikatni hrany v siti a hranicni body (snad) libovolne nestrukturovane site (muze obsahovat i diry)
+void Mesh::generateEdges(){
+
+ //anonymni funkce - hash ktery kazde hrane priradi unikatni cislo
+	auto hashFnc = [](double _x1, double _y1, double _x2, double _y2){
+		double _hash;
+		_hash = (_x1 + _x2)*14554 + _x1*_x2 + (_y1 + _y2)*137 + _y1*_y2*0.013;
+		return _hash;
+	};
+	//vygenerovani jednotlivych hran -> nektere budou dvakrat
+	for(auto &plg : cell){
+		Polygon const& plgTemp = plg;
+		int numVertices = plg.node_id.size();
+		for(int i = 0; i < numVertices-1; i++){
+			//ulozeni jednotlivych hran bunky
+			edge.push_back(Edge(plg.node_id[i],	plg.node_id[i+1],
+						hashFnc(node[plg.node_id[i]].x, node[plg.node_id[i]].y, node[plg.node_id[i+1]].x, node[plg.node_id[i+1]].y )));
+		}
+		//hrana ktera uzavira bunku
+		edge.push_back(Edge(plg.node_id[numVertices-1], plg.node_id[0],
+					hashFnc(node[plg.node_id[numVertices-1]].x, node[plg.node_id[numVertices-1]].y, node[plg.node_id[0]].x, node[plg.node_id[0]].y )));
+	}
+	
+	//seradi hrany podle hodnoty hashe
+        std::sort(edge.begin(), edge.end());
+	std::vector<Edge> edges_sorted = edge;
+        auto last = std::unique(edge.begin(), edge.end());
+	edge.erase(last,edge.end());
+        
+	//Vybere hrany na hranici a vyhodí jejich uzly (std::set odstrani duplicity)
+	for(int i = 1; i < edges_sorted.size() - 1; i++){
+		if(edges_sorted[i].hash != edges_sorted[i-1].hash && edges_sorted[i].hash != edges_sorted[i+1].hash){
+			boundaryNodes.insert(edges_sorted[i].n1);
+			boundaryNodes.insert(edges_sorted[i].n2);
+		}
+	}
+	if(edges_sorted[edges_sorted.size()-1].hash != edges_sorted[edges_sorted.size()-2].hash){
+			boundaryNodes.insert(edges_sorted[edges_sorted.size()-1].n1);
+			boundaryNodes.insert(edges_sorted[edges_sorted.size()-1].n2);
+	}
+	if(edges_sorted[0].hash != edges_sorted[1].hash){
+			boundaryNodes.insert(edges_sorted[0].n1);
+			boundaryNodes.insert(edges_sorted[0].n2);
+	}
+}
+
+//delka hrany bunky
+double Polygon::edgeLength(int i){	
+double edgeLength;
+if(i==(node_id.size()-1)){	
+	edgeLength = sqrt(pow((mesh.node[node_id[0]].x-mesh.node[node_id[i]].x),2)+pow((mesh.node[node_id[0]].y-mesh.node[node_id[i]].y),2));
+}
+else
+{
+	edgeLength = sqrt(pow((mesh.node[node_id[i+1]].x-mesh.node[node_id[i]].x),2)+pow((mesh.node[node_id[i+1]].y-mesh.node[node_id[i]].y),2));
+}
+return edgeLength;
 }

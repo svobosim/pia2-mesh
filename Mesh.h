@@ -48,6 +48,7 @@ public:
     std::vector<int> pointCellNeighbors(int p);
     void generateEdges();
     std::set<int> boundaryNodes;
+    void randomize(double r);
 };
 
 #endif //MESH_H

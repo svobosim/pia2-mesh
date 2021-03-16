@@ -63,7 +63,9 @@ int main(int iargc, char* iargv[]) {
 	for(auto &e : m.edge) {
 	  std::cout << e.n1 << " " << e.n2 << "\n";
 	}
-	
-    return 0;
+    
+	m.randomize(0.5);
+    	
+return 0;
 }
 

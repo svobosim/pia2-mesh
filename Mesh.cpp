@@ -43,6 +43,24 @@ Mesh::Mesh(double xl, double xr, double yl, double yr, int nx, int ny) {
     generateEdges();
 };
 
+//random posuv uzlu o r
+void Mesh::randomize(double r){
+	double vysledek, puvodniX, puvodniY, noveX, noveY, randomR, randomPhi;
+	for (int j=0; j<(node.size()); ++j){
+		puvodniX = node[j].x;
+		puvodniY = node[j].y;
+		randomR = (double)rand()/RAND_MAX*r;
+		randomPhi = (double)rand()/RAND_MAX*2*3.14159265359;
+		noveX = puvodniX + randomR*cos(randomPhi);
+		noveY = puvodniY + randomR*sin(randomPhi);
+		node[j].x = noveX;
+		node[j].y = noveY;
+		std::cout << "Coordinates of node " << j << "were changed  "<< "X:" << puvodniX <<"->" << noveX <<"   Y:" << puvodniY <<"->" << noveY << "   (displacement = "<< pow(pow(puvodniX-noveX,2)+ pow(puvodniY-noveY,2),0.5)<< ")\n";
+		//std::cout <<"old x = " puvodniX <<"\n";//", new x = " << noveX << "\n" <<"; old y = " puvodniY <<", new y = " << noveY << " => displacement = "<< pow(pow(puvodniX-noveX,2)+ pow(puvodniY-noveY,2),0.5)<< 
+	}
+	return;
+}
+
 std::vector<int> Mesh::pointCellNeighbors(int p){
 	std::vector<int> pointCellNeighbors;
 
@@ -71,6 +89,7 @@ double Polygon::area(){
 	plocha = plocha*0.5;
 	return plocha;
 }
+
 
 //Vygeneruje unikatni hrany v siti a hranicni body (snad) libovolne nestrukturovane site (muze obsahovat i diry)
 void Mesh::generateEdges(){
@@ -130,3 +149,4 @@ else
 }
 return edgeLength;
 }
+

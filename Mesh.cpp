@@ -85,7 +85,12 @@ bool Polygon::isConvex(){
 			v12 = mesh.node[node_id[j+2]].y - mesh.node[node_id[j]].y;
 			
 			w13 = u11 * v12 - v11 * u12;
-	    	}
+		
+			if(w13 < 0){		
+							
+			return 0;
+				}
+	   		};
 
 //vektory u,v vedene z predposledniho uzlu   	
 			u21 = mesh.node[node_id[node_id.size()]].x - mesh.node[node_id[node_id.size()-1]].x;

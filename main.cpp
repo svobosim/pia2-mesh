@@ -23,11 +23,13 @@ int main(int iargc, char* iargv[]) {
         }
         std::cout << "]\n";
     }
+    
+	m.randomize(0.02);
 
 	  Field<double> W(m);
 
 	  for (int i=0; i<m.cell.size(); ++i) {
-		    W[i] = i;
+		    W[i] = m.cell[i].area();
         std::cout << W[i] << "\n";
     }
 
@@ -63,9 +65,7 @@ int main(int iargc, char* iargv[]) {
 	for(auto &e : m.edge) {
 	  std::cout << e.n1 << " " << e.n2 << "\n";
 	}
-    
-	m.randomize(0.5);
     	
-return 0;
+	return 0;
 }
 

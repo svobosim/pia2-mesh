@@ -4,12 +4,6 @@
 #include <cmath>
 #include <algorithm>
 
-
-std::ostream& operator<<(std::ostream& os, const Point& p) {
-    os << p.x << " " << p.y << " 0.0";
-    return os;
-};
-
 // vypis geometrie polygonu
 std::ostream& operator<<(std::ostream& os, const Polygon& p) {
 	os << p.node_id.size();
@@ -107,17 +101,17 @@ void Mesh::generateEdges(){
 		for(int i = 0; i < numVertices-1; i++){
 			//ulozeni jednotlivych hran bunky
 			edge.push_back(Edge(plg.node_id[i],	plg.node_id[i+1],
-						hashFnc(node[plg.node_id[i]].x, node[plg.node_id[i]].y, node[plg.node_id[i+1]].x, node[plg.node_id[i+1]].y )));
+						hashFnc(node[plg.node_id[i]].x, node[plg.node_id[i]].y, node[plg.node_id[i+1]].x, node[plg.node_id[i+1]].y ),*this));
 		}
 		//hrana ktera uzavira bunku
 		edge.push_back(Edge(plg.node_id[numVertices-1], plg.node_id[0],
-					hashFnc(node[plg.node_id[numVertices-1]].x, node[plg.node_id[numVertices-1]].y, node[plg.node_id[0]].x, node[plg.node_id[0]].y )));
+					hashFnc(node[plg.node_id[numVertices-1]].x, node[plg.node_id[numVertices-1]].y, node[plg.node_id[0]].x, node[plg.node_id[0]].y ),*this));
 	}
 	
 	//seradi hrany podle hodnoty hashe
-        std::sort(edge.begin(), edge.end());
+    std::sort(edge.begin(), edge.end());
 	std::vector<Edge> edges_sorted = edge;
-        auto last = std::unique(edge.begin(), edge.end());
+    auto last = std::unique(edge.begin(), edge.end());
 	edge.erase(last,edge.end());
         
 	//Vybere hrany na hranici a vyhodí jejich uzly (std::set odstrani duplicity)
@@ -135,6 +129,7 @@ void Mesh::generateEdges(){
 			boundaryNodes.insert(edges_sorted[0].n1);
 			boundaryNodes.insert(edges_sorted[0].n2);
 	}
+	
 }
 
 //delka hrany bunky
@@ -149,4 +144,7 @@ else
 }
 return edgeLength;
 }
+
+Vector2D Edge::normal() const { return Vector2D(mesh.node[n1],mesh.node[n2]).normal(); }
+Vector2D Edge::unitNormal() const { return Vector2D(mesh.node[n1],mesh.node[n2]).unitNormal(); }
 

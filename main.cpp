@@ -54,6 +54,7 @@ int main(int iargc, char* iargv[]) {
 	for (int i=0; i<m.cell.size(); ++i) {
 		Polygon p = m.cell[i];
 		std::cout << i << " isConvex = " << p.isConvex() << "\n";
+	}
 	for(auto &t : m.boundaryNodes){
 		std::cout << t << " pos: " << m.node[t] << std::endl;
 	}

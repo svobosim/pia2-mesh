@@ -84,6 +84,26 @@ double Polygon::area(){
 	return plocha;
 }
 
+Point Polygon::centroid(){
+			double x1=mesh.node[node_id[0]].x;
+			double y1=mesh.node[node_id[0]].y;
+			double x2=mesh.node[node_id[1]].x;
+			double y2=mesh.node[node_id[1]].y;
+			double x3=mesh.node[node_id[2]].x;
+			double y3=mesh.node[node_id[2]].y;
+			double x4=mesh.node[node_id[3]].x;
+			double y4=mesh.node[node_id[3]].y;
+			
+			double barycenter1x=(x1+x2+x3)/3;
+			double barycenter2x=(x3+x4+x1)/3;
+			double barycenter1y=(y1+y2+y3)/3;
+			double barycenter2y=(y3+y4+y1)/3;
+			
+			double area1=x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2);
+			double area2=x3*(y4-y1)+x4*(y1-y3)+x1*(y3-y4);
+									
+	return {(barycenter1x*area1+barycenter2x*area2)/(area1+area2), (barycenter1y*area1+barycenter2y*area2)/(area1+area2)};
+}
 
 //test konvexnosti bunky (1 = je konvexni; 0 = neni konvexni)
 bool Polygon::isConvex(){
@@ -199,4 +219,3 @@ return edgeLength;
 
 Vector2D Edge::normal() const { return Vector2D(mesh.node[n1],mesh.node[n2]).normal(); }
 Vector2D Edge::unitNormal() const { return Vector2D(mesh.node[n1],mesh.node[n2]).unitNormal(); }
-

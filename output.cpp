@@ -38,3 +38,7 @@ void outputVTK(std::string filename, Mesh const& m, Field<double> const& u) {
 	
 	f.close();
 }
+
+void outputVTK(std::string filename, Mesh const& m, Field<Compressible> const& u) {
+
+}

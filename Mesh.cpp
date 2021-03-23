@@ -75,11 +75,11 @@ std::vector<int> Mesh::pointCellNeighbors(int p){
 
 double Polygon::area(){
 	double plocha, lsum, rsum;
-	for (int j=0; j<(node_id.size()-1.0); ++j) {                                   // potreuju cyklus od 0 do poctu nodu meho polygonu-1
+	for (int j=0; j<node_id.size()-1; ++j) {                                   // potreuju cyklus od 0 do poctu nodu meho polygonu-1
 		lsum = lsum + mesh.node[node_id[j]].x * mesh.node[node_id[j+1]].y;
 		rsum = rsum + mesh.node[node_id[j+1]].x * mesh.node[node_id[j]].y;
 	}
-	plocha = std::abs (lsum + mesh.node[node_id[node_id.size()-1.0]].x * mesh.node[node_id[0]].y) - rsum - (mesh.node[node_id[0]].x * mesh.node[node_id[node_id.size()-1.0]].y);
+	plocha = std::abs (lsum + mesh.node[node_id[node_id.size()-1]].x * mesh.node[node_id[0]].y) - rsum - (mesh.node[node_id[0]].x * mesh.node[node_id[node_id.size()-1]].y);
 	plocha = plocha*0.5;
 	return plocha;
 }
@@ -131,8 +131,8 @@ bool Polygon::isConvex(){
 	   		};
 
 //vektory u,v vedene z predposledniho uzlu   	
-			u21 = mesh.node[node_id[node_id.size()]].x - mesh.node[node_id[node_id.size()-1]].x;
-			u22 = mesh.node[node_id[node_id.size()]].y - mesh.node[node_id[node_id.size()-1]].y;
+			u21 = mesh.node[node_id[node_id.size()-1]].x - mesh.node[node_id[node_id.size()-2]].x;
+			u22 = mesh.node[node_id[node_id.size()-1]].y - mesh.node[node_id[node_id.size()-2]].y;
 			
 			v21 = mesh.node[node_id[0]].x - mesh.node[node_id[node_id.size()-1]].x;
 			v22 = mesh.node[node_id[0]].y - mesh.node[node_id[node_id.size()-1]].y;
@@ -140,11 +140,11 @@ bool Polygon::isConvex(){
 			w23 = u21 * v22 - v21 * u22;
 
 //vektory u,v vedene z posledniho uzlu 			
-			u31 = mesh.node[node_id[0]].x - mesh.node[node_id[node_id.size()]].x;
-			u32 = mesh.node[node_id[0]].y - mesh.node[node_id[node_id.size()]].y;
+			u31 = mesh.node[node_id[0]].x - mesh.node[node_id[node_id.size()-1]].x;
+			u32 = mesh.node[node_id[0]].y - mesh.node[node_id[node_id.size()-1]].y;
 			
-			v31 = mesh.node[node_id[1]].x - mesh.node[node_id[node_id.size()]].x;
-			v32 = mesh.node[node_id[1]].y - mesh.node[node_id[node_id.size()]].y;
+			v31 = mesh.node[node_id[1]].x - mesh.node[node_id[node_id.size()-1]].x;
+			v32 = mesh.node[node_id[1]].y - mesh.node[node_id[node_id.size()-1]].y;
 			
 			w33 = u31 * v32 - v31 * u32;
 	    
